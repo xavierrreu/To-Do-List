@@ -1,0 +1,148 @@
+/* Geral */
+* {
+    padding: 0;
+    margin: 0;
+    font-family: Helvetica;
+    color: #333;
+    box-sizing: border-box;
+}
+body{
+    background-image: url("../img/fundo.canion.jpg");
+    background-size: cover;
+}
+button {
+    background-color: #fdfdfd;
+    color: #102f5e;
+    border: 2px solid #102f5e;
+    padding: .3rem .6rem;
+    /* rem se adapta a unidade de medida da tela em uso  */
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.4s;
+}
+/* a partir daqui o programa faz com que, quando o cursor passe nos botões, o fundo fique azul e o ícone, branco. */
+button:hover{
+    background-color: #102f5e;
+    color: #fff;
+}
+button:hover > i{
+    color: #fff;
+}
+/* até aqui */
+button i{
+    color: #102f5e;
+    font-weight: bold;
+    pointer-events: none;
+    /* utilizamos pointer-events: none porque o ícone está acima do botão, portanto, se o usuário clicasse nele, nada aconteceria. Para evitar isso escrevemos esse código */
+}
+input, select{
+    padding: 0.25rem 0.5rem;
+}
+.hide{
+    display: none;
+}
+
+/*----------------------------------- ToDo header------------------------------------  */
+.todo-container{
+    max-width: 450px;
+    margin: 3rem auto ;
+    /* 3 rem do topo e automatica (esquerda e direita)*/
+    background-color: #fdfdfd;
+    padding: 1.5rem;
+    border-radius: 15px;
+}
+.todo-container header{
+    text-align: center;
+    padding: 0 1rem 1rem;
+    /* 0 em cima, 1 nas laterais e 1 embaixo*/
+    border-bottom: 1px solid #ccc;
+}
+
+/*------------------------------------- ToDo form ----------------------------------------*/
+
+#todo-form, #edit-form{
+    padding: 1rem;
+    border-bottom: 1px solid #ccc;
+}
+#todo-form p, #edit-form p{
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+.form-control{
+    display: flex;
+    /* coloca os botões ao lado das caixas */
+}
+.form-control input{
+    margin-right: 0.3rem;
+}
+#cancel-edit-btn{
+    margin-top: 0.3rem;
+}
+
+/* --------------------------------------ToDo bar----------------------------------------  */
+
+#toolbar{
+    padding: 1rem;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+}
+#toolbar h4{
+    margin-bottom: 0.5rem;
+}
+#search{
+    border-right: 1px solid #ddd;
+    padding-right: 1rem;
+    margin-right: 1rem;
+    /* padding é espaçamento interno, margin é o externo */
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    /* faz o título (pesquisar) ficar em cima e a caixa de busca ficar embaixo */
+}
+#search form{
+    display: flex;
+}
+#search input{
+    width: 100%;
+    margin-right: 0.3rem;
+}
+
+#filter{
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+}
+#filter select{
+    flex: 1;
+}
+
+/* ------------------------------------ToDo List-------------------------------------------  */
+
+.todo{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+    transition: 0.3s;
+}
+.todo h3{
+    flex: 1;
+    /* faz com que o h3 ocupe toda a largura possível e deixe apenas espaço para os botões. */
+    font-size: 0.9rem;
+}
+.todo button{
+    margin-left: 0.4rem;
+}
+.done{
+    background-color: #395169;
+}
+.done h3{
+    color: #fff;
+    text-decoration: line-through;
+    /* faz uma linha cruzar o texto  */
+    font-style: italic;
+}
