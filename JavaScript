@@ -1,0 +1,155 @@
+// --------------------------------------------------------------------------- seleção de elementos, como um link do HTML -----------------------------------------------------------------------
+const todoForm = document.querySelector("#todo-form");
+const todoInput= document.querySelector("#todo-input");
+const todoList = document.querySelector("#todo-list");
+const editForm = document.querySelector("#edit-form");
+const editInput = document.querySelector("#edit-input");
+const cancelEditBtn = document.querySelector("#cancel-edit-btn");
+
+let OldInputValue;
+
+// -------------------------------------------------------------------------------------- funções -----------------------------------------------------------------------------------------------
+
+
+
+
+// aqui estou recriando o seguinte trecho HTML em formato JS:
+// <div class="todo done">
+//     <h3>Estou fazendo alguma coisa</h3>
+//         <button class="finish-todo">
+//              <i class="fa-solid fa-check"></i>
+//         </button>
+//         <button class="edit-todo">
+//              <i class="fa-solid fa-pen"></i>
+//         </button>
+//         <button class="remove-todo">
+//             <i class="fa-solid fa-xmark"></i>
+//         </button>
+// </div>
+// ---------------------------------função para adicionar nova tarefa 
+const saveTodo = (text) => {
+
+    const todo = document.createElement("div");
+    todo.classList.add("todo");
+    // adiciona a class "todo" para a div criada
+
+    const todoTitle = document.createElement("h3");
+    todoTitle.innerText = text;
+    todo.appendChild(todoTitle);
+
+    // botão de tarefa feita 
+    const doneBtn = document.createElement("button")
+    doneBtn.classList.add("finish-todo")
+    doneBtn.innerHTML = '<i class="fa-solid fa-check"></i>'
+    // aqui adicionamos o ícone importado da biblioteca no html 
+    todo.appendChild(doneBtn);
+
+    // botão de edição
+    const editBtn = document.createElement("button")
+    editBtn.classList.add("edit-todo")
+    editBtn.innerHTML = '<i class="fa-solid fa-pen"></i>'
+    // aqui adicionamos o ícone importado da biblioteca no html 
+    todo.appendChild(editBtn);
+
+    // botão de remover 
+    const deleteBtn = document.createElement("button")
+    deleteBtn.classList.add("remove-todo")
+    deleteBtn.innerHTML = '<i class="fa-solid fa-xmark">'
+    // aqui adicionamos o ícone importado da biblioteca no html 
+    todo.appendChild(deleteBtn);
+
+    // colocando esse pedaço de código dentro da lista geral no html chamada 'todo'
+    todoList.appendChild(todo);
+
+    todoInput.value = "";
+    todoInput.focus();
+};
+const toggleForms = () => {
+    editForm.classList.toggle("hide");
+    todoForm.classList.toggle("hide");
+    todoList.classList.toggle("hide");
+}
+
+const updateTodo = (text) => {
+    const todos = document.querySelectorAll(".todo")
+
+    todos.forEach((todo) =>{
+        let todoTitle = todo.querySelector("h3")
+
+        if (todoTitle.innerText === OldInputValue) {
+            todoTitle.innerText = text
+        }
+    })
+}
+
+
+
+// ---------------------------------------------------------------------------------------------- Eventos --------------------------------------------------------------------
+
+
+
+todoForm.addEventListener("submit", (e) => {
+    e.preventDefault()
+
+    // a constante inputValue terá o mesmo valor do que o usuário escreve no todoInput 
+    const inputValue = todoInput.value;
+
+    // aqui ocorre uma mini-validação para ver se está funcionando. Se o usuário esrcrever algo no campo todoInput, mostre no console.log 
+    // if(inputValue){
+    //     console.log(inputValue);
+    // }
+
+    if(inputValue){
+        saveTodo(inputValue)
+    }
+})
+// "submit" foi o nome que dei para esse evento, (e) significa ao enviar e preventDefault diz para o programa que eu não quero que ele envie as informações para o navegador, apenas modifique-as
+
+document.addEventListener("click", (e => {
+
+    // ---------------------------------para criar a animação do botão de check 
+    // criei uma constante chamada targetEl 
+    const targetEl = e.target;
+    // todas as açoes devem ser espacificadas no elemento pai (parentEl), nesse caso, quero que o JS selecione como pai a div mais próxima
+    const parentEl = targetEl.closest("div");
+    let todoTitle;
+    if(parentEl && parentEl.querySelector("h3")){
+        todoTitle = parentEl.querySelector("h3").innerText;
+    }
+    // caso ocorra um click no target e ele contenha uma classe finish-todo, faça tal coisa 
+    if(targetEl.classList.contains("finish-todo")) {
+        parentEl.classList.toggle("done");
+        // toggle é a troca, caso o elemento já esteja com essa atribuição, deixa de estar e vice-versa, não impota no número de clicks
+    }
+
+    // ---------------------------------para criar a animação do botão de edit
+    if(targetEl.classList.contains("edit-todo")){
+        toggleForms();
+        // toggleForms foi uma constante criada na linha 63 que faz com que todas as divs aparentes sejam fechadas para que apenas a de edição apareça
+        editInput.value = todoTitle 
+        OldInputValue = todoTitle
+    }
+
+     // ---------------------------------para criar a animação do botão de delete
+    if(targetEl.classList.contains("remove-todo")){
+        parentEl.remove();
+    }
+
+    cancelEditBtn.addEventListener("click", (e) => {
+        e.preventDefault()
+
+        toggleForms();
+    })
+}))
+
+
+editForm.addEventListener("submit", (e) => {
+    e.preventDefault()
+
+    const editInputValue = editInput.value
+
+    if(editInputValue){
+        updateTodo(editInputValue)
+    }
+    toggleForms()
+})
